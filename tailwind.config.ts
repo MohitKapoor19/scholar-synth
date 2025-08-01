@@ -26,7 +26,8 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					hover: 'hsl(var(--primary-hover))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -51,6 +52,31 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
+				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				// Kanban status colors
+				'to-study': {
+					DEFAULT: 'hsl(var(--to-study))',
+					foreground: 'hsl(var(--to-study-foreground))'
+				},
+				'in-progress': {
+					DEFAULT: 'hsl(var(--in-progress))',
+					foreground: 'hsl(var(--in-progress-foreground))'
+				},
+				revision: {
+					DEFAULT: 'hsl(var(--revision))',
+					foreground: 'hsl(var(--revision-foreground))'
+				},
+				completed: {
+					DEFAULT: 'hsl(var(--completed))',
+					foreground: 'hsl(var(--completed-foreground))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
