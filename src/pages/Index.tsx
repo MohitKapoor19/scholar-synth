@@ -3,7 +3,7 @@ import { useStudyData } from '@/hooks/useStudyData';
 import { isFirstTime } from '@/lib/storage';
 import { FirstTimeSetup } from '@/components/setup/FirstTimeSetup';
 import { Navigation, NavigationView } from '@/components/layout/Navigation';
-import { KanbanBoard } from '@/components/kanban/KanbanBoard';
+import { StudyDashboard } from '@/components/dashboard/StudyDashboard';
 import { ResourceLibrary } from '@/components/library/ResourceLibrary';
 
 const Index = () => {
@@ -48,7 +48,7 @@ const Index = () => {
     switch (currentView) {
       case 'dashboard':
         return (
-          <KanbanBoard
+          <StudyDashboard
             tasks={data.tasks}
             subjects={data.userProfile.subjects}
             onTaskUpdate={updateTask}
