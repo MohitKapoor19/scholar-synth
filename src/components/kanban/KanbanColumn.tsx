@@ -1,7 +1,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { StudyTask, TaskStatus } from '@/types/study';
-import { TaskCard } from './TaskCard';
+import { TaskCardEnhanced } from './TaskCardEnhanced';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
@@ -15,17 +15,19 @@ interface KanbanColumnProps {
   tasks: StudyTask[];
   onTaskUpdate: (task: StudyTask) => void;
   onTaskDelete: (taskId: string) => void;
+  onAIBreakdown?: (task: StudyTask) => void;
 }
 
-export const KanbanColumn = ({
-  id,
-  title,
-  icon,
-  description,
-  color,
-  tasks,
-  onTaskUpdate,
-  onTaskDelete
+export const KanbanColumn = ({ 
+  id, 
+  title, 
+  icon, 
+  description, 
+  color, 
+  tasks, 
+  onTaskUpdate, 
+  onTaskDelete,
+  onAIBreakdown = () => {}
 }: KanbanColumnProps) => {
   const { setNodeRef, isOver } = useDroppable({
     id,
@@ -61,12 +63,13 @@ export const KanbanColumn = ({
         >
           <div className="space-y-3 min-h-[200px]">
             {tasks.map((task) => (
-              <TaskCard
-                key={task.id}
-                task={task}
-                onUpdate={onTaskUpdate}
-                onDelete={onTaskDelete}
-              />
+            <TaskCardEnhanced
+              key={task.id}
+              task={task}
+              onUpdate={onTaskUpdate}
+              onDelete={onTaskDelete}
+              onAIBreakdown={onAIBreakdown}
+            />
             ))}
             {tasks.length === 0 && (
               <div className="flex items-center justify-center h-24 border-2 border-dashed border-muted rounded-lg">

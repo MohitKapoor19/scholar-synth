@@ -10,8 +10,19 @@ export interface StudyTask {
   due: string; // ISO date string
   timeSpent: number; // seconds
   status: TaskStatus;
+  priority: 'low' | 'medium' | 'high' | 'urgent';
+  difficulty: 'easy' | 'medium' | 'hard';
+  subtasks: SubTask[];
+  parentTaskId?: string; // For subtasks
   createdAt: string; // ISO timestamp
   updatedAt: string; // ISO timestamp
+}
+
+export interface SubTask {
+  id: string;
+  title: string;
+  completed: boolean;
+  createdAt: string;
 }
 
 export interface Resource {

@@ -15,7 +15,9 @@ import {
 } from 'lucide-react';
 import { KanbanColumn } from '../kanban/KanbanColumn';
 import { CreateTaskDialog } from '../kanban/CreateTaskDialog';
-import { TaskCard } from '../kanban/TaskCard';
+import { TaskCardEnhanced } from '../kanban/TaskCardEnhanced';
+import { AIBreakdownDialog } from '../ai/AIBreakdownDialog';
+import { QuickTaskCreate } from '../ai/QuickTaskCreate';
 import { cn } from '@/lib/utils';
 import {
   DndContext,
@@ -73,6 +75,8 @@ export const StudyDashboard = ({
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSubject, setSelectedSubject] = useState<string>('All');
+  const [isAIBreakdownOpen, setIsAIBreakdownOpen] = useState(false);
+  const [selectedTaskForAI, setSelectedTaskForAI] = useState<StudyTask | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -170,6 +174,11 @@ export const StudyDashboard = ({
       if (task) return task;
     }
     return null;
+  };
+
+  const handleAIBreakdown = (task: StudyTask) => {
+    setSelectedTaskForAI(task);
+    setIsAIBreakdownOpen(true);
   };
 
   return (
@@ -274,6 +283,12 @@ export const StudyDashboard = ({
 
       {/* Study Board */}
       <div className="flex-1 p-6">
+        {/* Quick AI Task Creator */}
+        <QuickTaskCreate 
+          subjects={subjects}
+          onTaskCreate={onTaskCreate}
+        />
+
         <div className="mb-4">
           <h2 className="text-lg font-semibold">Study Board</h2>
           <p className="text-sm text-muted-foreground">
@@ -298,16 +313,18 @@ export const StudyDashboard = ({
                 tasks={filteredTasks[status as TaskStatus]}
                 onTaskUpdate={onTaskUpdate}
                 onTaskDelete={onTaskDelete}
+                onAIBreakdown={handleAIBreakdown}
               />
             ))}
           </div>
 
           <DragOverlay>
             {activeTask ? (
-              <TaskCard
+              <TaskCardEnhanced
                 task={activeTask}
                 onUpdate={onTaskUpdate}
                 onDelete={onTaskDelete}
+                onAIBreakdown={handleAIBreakdown}
                 isDragging
               />
             ) : null}
@@ -321,6 +338,14 @@ export const StudyDashboard = ({
         onOpenChange={setIsCreateDialogOpen}
         subjects={subjects}
         onTaskCreate={onTaskCreate}
+      />
+
+      {/* AI Breakdown Dialog */}
+      <AIBreakdownDialog
+        open={isAIBreakdownOpen}
+        onOpenChange={setIsAIBreakdownOpen}
+        task={selectedTaskForAI}
+        onTaskUpdate={onTaskUpdate}
       />
     </div>
   );

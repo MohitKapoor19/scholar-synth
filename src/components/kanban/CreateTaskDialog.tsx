@@ -39,7 +39,9 @@ export const CreateTaskDialog = ({
     description: '',
     subject: '',
     due: '',
-    status: 'toStudy' as TaskStatus
+    status: 'toStudy' as TaskStatus,
+    priority: 'medium' as const,
+    difficulty: 'medium' as const
   });
 
   const resetForm = () => {
@@ -48,7 +50,9 @@ export const CreateTaskDialog = ({
       description: '',
       subject: '',
       due: '',
-      status: 'toStudy'
+      status: 'toStudy',
+      priority: 'medium',
+      difficulty: 'medium'
     });
   };
 
@@ -65,7 +69,10 @@ export const CreateTaskDialog = ({
       subject: formData.subject,
       due: formData.due,
       timeSpent: 0,
-      status: formData.status
+      status: formData.status,
+      priority: formData.priority,
+      difficulty: formData.difficulty,
+      subtasks: []
     });
 
     resetForm();
@@ -152,6 +159,43 @@ export const CreateTaskDialog = ({
                   <SelectItem value="inProgress">In Progress</SelectItem>
                   <SelectItem value="revision">For Revision</SelectItem>
                   <SelectItem value="completed">Completed</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label>Priority</Label>
+              <Select
+                value={formData.priority}
+                onValueChange={(value) => setFormData(prev => ({ ...prev, priority: value as any }))}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="low">🟢 Low</SelectItem>
+                  <SelectItem value="medium">🟡 Medium</SelectItem>
+                  <SelectItem value="high">🟠 High</SelectItem>
+                  <SelectItem value="urgent">🔴 Urgent</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Difficulty</Label>
+              <Select
+                value={formData.difficulty}
+                onValueChange={(value) => setFormData(prev => ({ ...prev, difficulty: value as any }))}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="easy">⭐ Easy</SelectItem>
+                  <SelectItem value="medium">⭐⭐ Medium</SelectItem>
+                  <SelectItem value="hard">⭐⭐⭐ Hard</SelectItem>
                 </SelectContent>
               </Select>
             </div>
